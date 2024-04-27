@@ -1,11 +1,25 @@
 import './style.css'
-import { Application, Assets, DEPRECATED_SCALE_MODES, Sprite, TextureSource } from "pixi.js";
+import * as PIXI from "pixi.js";
 
 (async () => {
   // Create a PixiJS application.
-  const app = new Application()
+  const app = new PIXI.Application();
 
-  await Assets.load([
+  // Intialize the application.
+  await app.init({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    background: '#763b36',
+    resolution: 4,
+    roundPixels: true,
+    // resizeTo: window,
+  });
+
+  // Pixel Art settings.
+  app.canvas.style.imageRendering = "pixelated";
+  PIXI.TextureSource.defaultOptions.scaleMode = PIXI.DEPRECATED_SCALE_MODES.NEAREST;
+
+  await PIXI.Assets.load([
     /**
      * Heros
      */
@@ -65,46 +79,78 @@ import { Application, Assets, DEPRECATED_SCALE_MODES, Sprite, TextureSource } fr
     { alias: "monster9", src: 'kenney_tiny-dungeon/Tiles/tile_0124.png' },
   ]);
 
-  // Intialize the application.
-  await app.init({
-    width: window.innerWidth,
-    height: window.innerHeight,
-    background: '#763b36',
-    resolution: 4,
-    roundPixels: true,
-    // resizeTo: window,
-  });
+  // Then adding the application's canvas to the DOM body.
+  document.body.appendChild(app.canvas);
 
-  const hero1 = new Sprite(Assets.get("hero1"));
+  const hero1 = new PIXI.Sprite(PIXI.Assets.get("hero1"));
   hero1.position.x = 30;
   hero1.position.y = 30;
   app.stage.addChild(hero1);
 
-  const hero2 = new Sprite(Assets.get("hero2"));
+  const hero2 = new PIXI.Sprite(PIXI.Assets.get("hero2"));
   hero2.position.x = 50;
   hero2.position.y = 30;
   app.stage.addChild(hero2);
 
-  const hero3 = new Sprite(Assets.get("hero3"));
+  const hero3 = new PIXI.Sprite(PIXI.Assets.get("hero3"));
   hero3.position.x = 70;
   hero3.position.y = 30;
   app.stage.addChild(hero3);
 
-  const hero4 = new Sprite(Assets.get("hero4"));
+  const hero4 = new PIXI.Sprite(PIXI.Assets.get("hero4"));
   hero4.position.x = 90;
   hero4.position.y = 30;
   app.stage.addChild(hero4);
 
-  const hero5 = new Sprite(Assets.get("hero5"));
+  const hero5 = new PIXI.Sprite(PIXI.Assets.get("hero5"));
   hero5.position.x = 110;
   hero5.position.y = 30;
   app.stage.addChild(hero5);
 
-  // Then adding the application's canvas to the DOM body.
-  document.body.appendChild(app.canvas);
-
-
-  // Big Pixel Resolution
-  app.canvas.style.imageRendering = "pixelated";
-  TextureSource.defaultOptions.scaleMode = DEPRECATED_SCALE_MODES.NEAREST;
 })();
+
+// /**
+// * This is the default playground.
+// * You should see a bunny spinning in the right preview pane.
+// * Feel free to use this as a starting point for you own playground!
+// */
+// import * as PIXI from "pixi.js";
+
+// // Create our application instance
+// (async () => {
+//   const app = new PIXI.Application();
+//   await app.init({
+//       width: window.innerWidth,
+//       height: window.innerHeight,
+//       backgroundColor: 0x2c3e50,
+//       resolution: 4,
+//       roundPixels: true,
+//   });
+
+//   app.canvas.style.imageRendering = "pixelated";
+//   PIXI.TextureSource.defaultOptions.scaleMode = PIXI.DEPRECATED_SCALE_MODES.NEAREST;
+
+//   document.body.appendChild(app.canvas);
+
+//   // Load the bunny texture
+//   const texture = await PIXI.Assets.load('https://pixijs.io/examples/examples/assets/bunny.png')
+
+//   // Create a new Sprite using the texture
+//   const bunny = new PIXI.Sprite(texture);
+
+//   // Center the sprite's anchor point
+//   bunny.anchor.set(0.5);
+
+//   // Move the sprite to the center of the screen
+//   bunny.x = app.renderer.width / 8;
+//   bunny.y = app.renderer.height / 8;
+
+//   app.stage.addChild(bunny);
+
+//   // Listen for animate update
+//   app.ticker.add(function(ticker)
+//   {
+//       // Rotate mr rabbit clockwise
+//       bunny.rotation += 0.1 * ticker.deltaTime;
+//   });
+// })();
