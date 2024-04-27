@@ -22,7 +22,9 @@ import { Application, Assets, DEPRECATED_SCALE_MODES, Sprite, TextureSource } fr
     { alias: "hero11", src: 'kenney_tiny-dungeon/Tiles/tile_0111.png' },
     { alias: "hero12", src: 'kenney_tiny-dungeon/Tiles/tile_0112.png' },
 
-    // consumables
+    /**
+     * Potions
+     */
     { alias: "potion1", src: 'kenney_tiny-dungeon/Tiles/tile_0128.png' },
     { alias: "potion2", src: 'kenney_tiny-dungeon/Tiles/tile_0127.png' },
     { alias: "potion3", src: 'kenney_tiny-dungeon/Tiles/tile_0126.png' },
@@ -32,25 +34,26 @@ import { Application, Assets, DEPRECATED_SCALE_MODES, Sprite, TextureSource } fr
     { alias: "potion7", src: 'kenney_tiny-dungeon/Tiles/tile_0115.png' },
     { alias: "potion7", src: 'kenney_tiny-dungeon/Tiles/tile_0116.png' },
 
-    //  pickables
+    /**
+     * Weapons
+     */
     { alias: "shield1", src: 'kenney_tiny-dungeon/Tiles/tile_0101.png' },
     { alias: "shield2", src: 'kenney_tiny-dungeon/Tiles/tile_0102.png' },
-
     { alias: "sword1", src: 'kenney_tiny-dungeon/Tiles/tile_0103.png' },
     { alias: "sword2", src: 'kenney_tiny-dungeon/Tiles/tile_0104.png' },
     { alias: "sword3", src: 'kenney_tiny-dungeon/Tiles/tile_0105.png' },
     { alias: "sword4", src: 'kenney_tiny-dungeon/Tiles/tile_0106.png' },
     { alias: "sword5", src: 'kenney_tiny-dungeon/Tiles/tile_0107.png' },
-
     { alias: "axe1", src: 'kenney_tiny-dungeon/Tiles/tile_0117.png' },
     { alias: "axe2", src: 'kenney_tiny-dungeon/Tiles/tile_0118.png' },
     { alias: "axe3", src: 'kenney_tiny-dungeon/Tiles/tile_0119.png' },
-
     { alias: "staff1", src: 'kenney_tiny-dungeon/Tiles/tile_0129.png' },
     { alias: "staff2", src: 'kenney_tiny-dungeon/Tiles/tile_0130.png' },
     { alias: "staff3", src: 'kenney_tiny-dungeon/Tiles/tile_0131.png' },
 
-    //  monsters
+    /**
+     * Monsters
+     */
     { alias: "monster1", src: 'kenney_tiny-dungeon/Tiles/tile_0108.png' },
     { alias: "monster2", src: 'kenney_tiny-dungeon/Tiles/tile_0109.png' },
     { alias: "monster3", src: 'kenney_tiny-dungeon/Tiles/tile_0110.png' },
