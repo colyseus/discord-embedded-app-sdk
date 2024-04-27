@@ -116,8 +116,13 @@ import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
     sprite.scale.x = 0;
     sprite.scale.y = 0;
     sprite.alpha = 0;
-    new Tween(sprite.scale).to({ x: 1, y: 1 }, 250).easing(Easing.Quadratic.Out).start();
-    new Tween(sprite).to({ alpha: 1 }, 300).start();
+    new Tween(sprite.scale)
+      .to({ x: 1, y: 1 }, 250)
+      .easing(Easing.Quadratic.Out)
+      .start();
+    new Tween(sprite)
+      .to({ alpha: 1 }, 300)
+      .start();
     // End fade effect
 
     if (sessionId === room.sessionId) {
