@@ -31,6 +31,8 @@
   "dependencies": {
     "@discord/embedded-app-sdk": "^1.2.0",
     "@pixi/tilemap": "^5.0.1",
+    "@tweenjs/tween.js": "^23.1.1",
+    "colyseus.js": "^0.15.19",
     "pixi.js": "^8.1.0"
   }
 }

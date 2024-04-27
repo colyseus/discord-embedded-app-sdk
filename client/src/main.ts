@@ -1,8 +1,14 @@
 import './style.css'
 import * as PIXI from "pixi.js";
+import TweenJS, { Easing, Tween } from "@tweenjs/tween.js";
+
+import { colyseusSDK } from './utils/Colyseus.js';
+import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
 
 (async () => {
-  // Create a PixiJS application.
+  /**
+   * Create a PixiJS application.
+   */
   const app = new PIXI.Application();
 
   // Intialize the application.
@@ -11,11 +17,10 @@ import * as PIXI from "pixi.js";
     height: window.innerHeight,
     background: '#763b36',
     resolution: 4,
-    roundPixels: true,
-    // resizeTo: window,
+    roundPixels: true, // Pixel art
   });
 
-  // Pixel Art settings.
+  // Pixel art
   app.canvas.style.imageRendering = "pixelated";
   PIXI.TextureSource.defaultOptions.scaleMode = PIXI.DEPRECATED_SCALE_MODES.NEAREST;
 
@@ -82,75 +87,121 @@ import * as PIXI from "pixi.js";
   // Then adding the application's canvas to the DOM body.
   document.body.appendChild(app.canvas);
 
-  const hero1 = new PIXI.Sprite(PIXI.Assets.get("hero1"));
-  hero1.position.x = 30;
-  hero1.position.y = 30;
-  app.stage.addChild(hero1);
+  /**
+   * Main game variables
+   */
+  let localPlayer: PIXI.Sprite; // we will use this to store the local player
+  const playerSprites = new Map<Player, PIXI.Sprite>();
 
-  const hero2 = new PIXI.Sprite(PIXI.Assets.get("hero2"));
-  hero2.position.x = 50;
-  hero2.position.y = 30;
-  app.stage.addChild(hero2);
+  /**
+   * Join the game room
+   */
+  const room = await colyseusSDK.joinOrCreate<MyRoomState>("my_room");
+  room.onStateChange((state) => {
+    console.log("New room state:", state);
+  });
 
-  const hero3 = new PIXI.Sprite(PIXI.Assets.get("hero3"));
-  hero3.position.x = 70;
-  hero3.position.y = 30;
-  app.stage.addChild(hero3);
+  room.state.players.onAdd((player, sessionId) => {
+    const sprite = new PIXI.Sprite(PIXI.Assets.get("hero" + player.heroType));
+    playerSprites.set(player, sprite);
 
-  const hero4 = new PIXI.Sprite(PIXI.Assets.get("hero4"));
-  hero4.position.x = 90;
-  hero4.position.y = 30;
-  app.stage.addChild(hero4);
+    player.position.onChange(() => {
+      sprite.position.x = player.position.x;
+      sprite.position.y = player.position.y;
+    });
 
-  const hero5 = new PIXI.Sprite(PIXI.Assets.get("hero5"));
-  hero5.position.x = 110;
-  hero5.position.y = 30;
-  app.stage.addChild(hero5);
+    sprite.anchor.set(0.5, 0.5);
+
+    // Fade in effect
+    sprite.scale.x = 0;
+    sprite.scale.y = 0;
+    sprite.alpha = 0;
+    new Tween(sprite.scale).to({ x: 1, y: 1 }, 250).easing(Easing.Quadratic.Out).start();
+    new Tween(sprite).to({ alpha: 1 }, 300).start();
+    // End fade effect
+
+    if (sessionId === room.sessionId) {
+      localPlayer = sprite;
+    }
+    app.stage.addChild(sprite);
+  });
+
+  room.state.players.onRemove((player, sessionId) => {
+    const sprite = playerSprites.get(player)!;
+
+    // Fade out & Remove sprite
+    new Tween(sprite.scale)
+      .to({ x: 0.1, y: 0.1 }, 100)
+      .easing(Easing.Quadratic.Out)
+      .onComplete(() => {
+        app.stage.removeChild(sprite);
+      })
+      .start();
+  });
+
+  /**
+   * Player input handling
+   */
+  const keys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+  };
+
+  /**
+   * Keyboard events
+   */
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowUp" || event.key === "w") {
+      keys.up = true;
+    } else if (event.key === "ArrowDown" || event.key === "s") {
+      keys.down = true;
+    } else if (event.key === "ArrowLeft" || event.key === "a") {
+      keys.left = true;
+    } else if (event.key === "ArrowRight" || event.key === "d") {
+      keys.right = true;
+    }
+  });
+
+  window.addEventListener("keyup", (event) => {
+    if (event.key === "ArrowUp" || event.key === "w") {
+      keys.up = false;
+    } else if (event.key === "ArrowDown" || event.key === "s") {
+      keys.down = false;
+    } else if (event.key === "ArrowLeft" || event.key === "a") {
+      keys.left = false;
+    } else if (event.key === "ArrowRight" || event.key === "d") {
+      keys.right = false;
+    }
+  });
+
+  /**
+   * Main Game Loop
+   */
+  app.ticker.add((time) => {
+    TweenJS.update(app.ticker.lastTime);
+
+    if (localPlayer) {
+      if (keys.up) {
+        localPlayer.position.y -= 1;
+      } else if (keys.down) {
+        localPlayer.position.y += 1;
+      }
+
+      if (keys.left) {
+        localPlayer.position.x -= 1;
+      } else if (keys.right) {
+        localPlayer.position.x += 1;
+      }
+
+      // Client-authoritative positioning
+      room.send("move", {
+        x: localPlayer.position.x,
+        y: localPlayer.position.y
+      })
+    }
+
+  });
 
 })();
-
-// /**
-// * This is the default playground.
-// * You should see a bunny spinning in the right preview pane.
-// * Feel free to use this as a starting point for you own playground!
-// */
-// import * as PIXI from "pixi.js";
-
-// // Create our application instance
-// (async () => {
-//   const app = new PIXI.Application();
-//   await app.init({
-//       width: window.innerWidth,
-//       height: window.innerHeight,
-//       backgroundColor: 0x2c3e50,
-//       resolution: 4,
-//       roundPixels: true,
-//   });
-
-//   app.canvas.style.imageRendering = "pixelated";
-//   PIXI.TextureSource.defaultOptions.scaleMode = PIXI.DEPRECATED_SCALE_MODES.NEAREST;
-
-//   document.body.appendChild(app.canvas);
-
-//   // Load the bunny texture
-//   const texture = await PIXI.Assets.load('https://pixijs.io/examples/examples/assets/bunny.png')
-
-//   // Create a new Sprite using the texture
-//   const bunny = new PIXI.Sprite(texture);
-
-//   // Center the sprite's anchor point
-//   bunny.anchor.set(0.5);
-
-//   // Move the sprite to the center of the screen
-//   bunny.x = app.renderer.width / 8;
-//   bunny.y = app.renderer.height / 8;
-
-//   app.stage.addChild(bunny);
-
-//   // Listen for animate update
-//   app.ticker.add(function(ticker)
-//   {
-//       // Rotate mr rabbit clockwise
-//       bunny.rotation += 0.1 * ticker.deltaTime;
-//   });
-// })();
