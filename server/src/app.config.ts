@@ -1,6 +1,7 @@
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import { playground } from "@colyseus/playground";
+import { auth, JWT } from "@colyseus/auth";
 
 /**
  * Import your Room files
@@ -26,6 +27,54 @@ export default config({
             res.send("It's time to kick ass and chew bubblegum!");
         });
 
+        //
+        // Discord Embedded SDK: Retrieve user token when under Discord/Embed
+        //
+        app.post('/api/discord_token', async (req, res) => {
+          try {
+            //
+            // Retrieve access token from Discord API
+            //
+            const response = await fetch(`https://discord.com/api/oauth2/token`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: new URLSearchParams({
+                client_id: process.env.DISCORD_CLIENT_ID,
+                client_secret: process.env.DISCORD_CLIENT_SECRET,
+                grant_type: 'authorization_code',
+                code: req.body.code,
+              }),
+            });
+
+            const { access_token } = await response.json();
+
+            //
+            // Retrieve user data from Discord API
+            //
+            const profile = await (await fetch(`https://discord.com/api/users/@me`, {
+              method: "GET",
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Bearer ${access_token}`,
+              }
+            })).json();
+
+            // TODO: store user profile into a database
+            const user = profile;
+
+            res.send({
+              access_token, // Discord Access Token
+              token: await JWT.sign(user), // Colyseus JWT token
+              user // User data
+            });
+
+          } catch (e: any) {
+            res.status(400).send({ error: e.message });
+          }
+        });
+
         /**
          * Use @colyseus/playground
          * (It is not recommended to expose this route in a production environment)
@@ -40,6 +89,13 @@ export default config({
          * Read more: https://docs.colyseus.io/tools/monitor/#restrict-access-to-the-panel-using-a-password
          */
         app.use("/colyseus", monitor());
+
+        //
+        // See more about the Authentication Module:
+        // https://docs.colyseus.io/authentication/
+        //
+        // app.use(auth.prefix, auth.routes())
+        //
     },
 
 

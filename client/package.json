@@ -29,6 +29,8 @@
     "vite": "^5.2.10"
   },
   "dependencies": {
+    "@discord/embedded-app-sdk": "^1.2.0",
+    "@pixi/tilemap": "^5.0.1",
     "pixi.js": "^8.1.0"
   }
 }

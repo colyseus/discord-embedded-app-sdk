@@ -1,18 +1,23 @@
 # (Template) Colyseus + Discord Embedded App SDK
 
-This Project Template is a starting point for crafting HTML5 multiplayer games on Discord.
+This Project Template is a starting point for crafting HTML5 multiplayer Discord Activities.
 
-## Template Project Structure
+## Project Structure
 
-We have provided a default project structure to get you started. This is as follows:
+The frontend and backend are separated into two different projects.
 
-- `client` - Contains the game & Discord SDK source code.
-- `client/main.js` - The main entry point for the client. This contains the game & Discord SDK configuration which starts the game.
-- `client/scenes/` - The Phaser Scenes are in this folder.
-- `client/assets/` - Contains game assets(sprites, sounds, spritesheets, etc).
-- `server/server.js` - Contains Discord SDK for OAuth2 connection
+- `client/` - Contains the frontend, which uses Pixi.js
+- `server/` - Contains the backend, which uses Colyseus
 
-## More links
+### Frontend Guide
+
+
+
+### Backend Guide
+
+---
+
+## More Discord Activities (open source)
 
 > Made a cool Discord Activity? Contribute to the list below!
 
