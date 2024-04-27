@@ -66,11 +66,14 @@ import { Application, Assets, DEPRECATED_SCALE_MODES, Sprite, TextureSource } fr
   ]);
 
   // Intialize the application.
-  await app.init({ background: '#763b36', resolution: 6, resizeTo: window, roundPixels: true, });
-
-  // Big Pixel Resolution
-  app.canvas.style.imageRendering = "pixelated";
-  TextureSource.defaultOptions.scaleMode = DEPRECATED_SCALE_MODES.NEAREST;
+  await app.init({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    background: '#763b36',
+    resolution: 4,
+    roundPixels: true,
+    // resizeTo: window,
+  });
 
   const hero1 = new Sprite(Assets.get("hero1"));
   hero1.position.x = 30;
@@ -99,4 +102,9 @@ import { Application, Assets, DEPRECATED_SCALE_MODES, Sprite, TextureSource } fr
 
   // Then adding the application's canvas to the DOM body.
   document.body.appendChild(app.canvas);
+
+
+  // Big Pixel Resolution
+  app.canvas.style.imageRendering = "pixelated";
+  TextureSource.defaultOptions.scaleMode = DEPRECATED_SCALE_MODES.NEAREST;
 })();
