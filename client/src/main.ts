@@ -2,6 +2,7 @@ import './style.css'
 import * as PIXI from "pixi.js";
 import TweenJS, { Easing, Tween } from "@tweenjs/tween.js";
 
+import { discordSDK } from './utils/DiscordSDK.js';
 import { colyseusSDK } from './utils/Colyseus.js';
 import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
 
@@ -91,14 +92,15 @@ import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
    * Main game variables
    */
   let localPlayer: PIXI.Sprite; // we will use this to store the local player
-  const playerSprites = new Map<Player, PIXI.Sprite>();
+  let playerSprites = new Map<Player, PIXI.Sprite>();
+
+  console.log("channelId", discordSDK.channelId)
 
   /**
    * Join the game room
    */
-  const room = await colyseusSDK.joinOrCreate<MyRoomState>("my_room");
-  room.onStateChange((state) => {
-    console.log("New room state:", state);
+  const room = await colyseusSDK.joinOrCreate<MyRoomState>("my_room", {
+    channelId: discordSDK.channelId // join by channel ID
   });
 
   room.state.players.onAdd((player, sessionId) => {

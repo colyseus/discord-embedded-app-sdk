@@ -5,13 +5,13 @@ const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
 const queryParams = new URLSearchParams(window.location.search);
 const isEmbedded = queryParams.get('frame_id') != null;
 
-let discordSdk: DiscordSDK | DiscordSDKMock;
+let discordSDK: DiscordSDK | DiscordSDKMock;
 
 const getEmbeddedDiscordAuth = async () => {
-  await discordSdk.ready();
+  await discordSDK.ready();
 
   // Authorize with Discord Client
-  const { code } = await discordSdk.commands.authorize({
+  const { code } = await discordSDK.commands.authorize({
     client_id: DISCORD_CLIENT_ID,
     response_type: 'code',
     state: '',
@@ -53,14 +53,14 @@ const getEmbeddedDiscordAuth = async () => {
   // Authenticate with the token, so we can use the Discord API
   // This is required to listen to SPEAKING events
   //
-  await discordSdk.commands.authenticate({ access_token: data.access_token, });
+  await discordSDK.commands.authenticate({ access_token: data.access_token, });
 
   return data;
 };
 
 if (isEmbedded) {
   // Discord Client ID for the embedded app
-  discordSdk = new DiscordSDK(DISCORD_CLIENT_ID);
+  discordSDK = new DiscordSDK(DISCORD_CLIENT_ID);
 
 } else {
   enum SessionStorageQueryParam { user_id = 'user_id', guild_id = 'guild_id', channel_id = 'channel_id', }
@@ -79,7 +79,7 @@ if (isEmbedded) {
     return randomString;
   }
 
-  // We're using session storage for user_id, guild_id, and channel_id
+  // We're using session storage for "user_id" and "guild_id"
   // This way the user/guild/channel will be maintained until the tab is closed, even if you refresh
   // Session storage will generate new unique mocks for each tab you open
   // Any of these values can be overridden via query parameters
@@ -87,12 +87,13 @@ if (isEmbedded) {
   // this will override this will override the session user_id value
   const mockUserId = getOverrideOrRandomSessionValue('user_id');
   const mockGuildId = getOverrideOrRandomSessionValue('guild_id');
-  const mockChannelId = getOverrideOrRandomSessionValue('channel_id');
+  const mockChannelId = 'dummyChannelId';
+  // const mockChannelId = getOverrideOrRandomSessionValue('channel_id');
 
-  discordSdk = new DiscordSDKMock(DISCORD_CLIENT_ID, mockGuildId, mockChannelId);
+  discordSDK = new DiscordSDKMock(DISCORD_CLIENT_ID, mockGuildId, mockChannelId);
   const discriminator = String(mockUserId.charCodeAt(0) % 5);
 
-  discordSdk._updateCommandMocks({
+  discordSDK._updateCommandMocks({
     authenticate: async () => {
       return await {
         access_token: 'mock_token',
@@ -110,4 +111,4 @@ if (isEmbedded) {
   });
 }
 
-export { discordSdk, isEmbedded, getEmbeddedDiscordAuth };
+export { discordSDK, isEmbedded, getEmbeddedDiscordAuth };

@@ -14,8 +14,8 @@ export default config({
         /**
          * Define your room handlers:
          */
-        gameServer.define('my_room', MyRoom);
-
+        gameServer.define('my_room', MyRoom)
+            .filterBy(['channelId']);
     },
 
     initializeExpress: (app) => {
