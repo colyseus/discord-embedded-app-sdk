@@ -19,7 +19,7 @@ The frontend and backend are separated into two different projects.
 
 ## More Discord Activities (open source)
 
-> Made a cool Discord Activity? Contribute to the list below!
+> Made a cool Discord Activity? Make a pull-request and contribute to the list below!
 
 - Discord Typing Race - [linkai101/keyboard-derby](https://github.com/linkai101/keyboard-derby/)
 - TypeScript + Colyseus + React - [Wave-Play/robo.js](https://github.com/Wave-Play/robo.js/tree/main/templates/activity-ts-colyseus-react)
