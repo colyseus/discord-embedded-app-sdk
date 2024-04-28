@@ -8,7 +8,7 @@ export class Vec2 extends Schema {
 }
 
 export class Player extends Schema {
-  @type("string") name: string;
+  @type("string") username: string;
   @type("number") heroType: number; // sprite to use (1-12)
   @type(Vec2) position = new Vec2();
 }
@@ -37,6 +37,7 @@ export class MyRoom extends Room<MyRoomState> {
   onJoin (client: Client, options: any) {
     console.log(client.sessionId, "joined!");
     const player = new Player();
+    player.username = client.auth?.username || "Guest";
     player.heroType = Math.floor(Math.random() * 12) + 1;
     player.position.x = Math.floor(Math.random() * 100);
     player.position.y = Math.floor(Math.random() * 100);

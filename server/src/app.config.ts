@@ -37,7 +37,7 @@ export default config({
           if (req.body.code === "mock_code") {
             const user = {
               id: Math.random().toString(36).slice(2, 10),
-              username: `Guest ${Math.random().toString(36).slice(2, 10)}`,
+              username: `User ${Math.random().toString().slice(2, 10)}`,
             }
             res.send({ access_token: "mocked", token: await JWT.sign(user), user });
             return;

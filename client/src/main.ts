@@ -98,7 +98,13 @@ const RESOLUTION = 4;
   let playerSprites = new Map<Player, PIXI.Sprite>();
 
   try {
-    await authenticate();
+    /**
+     * Authenticate with Discord and get Colyseus JWT token
+     */
+    const authData = await authenticate();
+
+    // Assign the token to authenticate with Colyseus (Room's onAuth)
+    colyseusSDK.auth.token = authData.token;
 
   } catch (e) {
     console.error("Failed to authenticate", e);
@@ -130,6 +136,9 @@ const RESOLUTION = 4;
   room.state.players.onAdd((player, sessionId) => {
     const sprite = new PIXI.Sprite(PIXI.Assets.get("hero" + player.heroType));
     playerSprites.set(player, sprite);
+
+    // TODO: display player username
+    console.log(player.username);
 
     player.position.onChange(() => {
       sprite.position.x = player.position.x;

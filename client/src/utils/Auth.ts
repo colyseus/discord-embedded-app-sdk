@@ -42,9 +42,6 @@ export async function authenticate() {
     body: JSON.stringify({ code, }),
   });
 
-  // Use the token to authenticate with Colyseus
-  colyseusSDK.auth.token = data.token;
-
   //
   // Authenticate with the token, so we can use the Discord API
   // This is required to listen to SPEAKING events
