@@ -1,3 +1,4 @@
+import { JWT } from "@colyseus/auth";
 import { Room, Client } from "@colyseus/core";
 import { Schema, MapSchema, type } from "@colyseus/schema";
 
@@ -18,6 +19,10 @@ export class MyRoomState extends Schema {
 
 export class MyRoom extends Room<MyRoomState> {
   maxClients = 4;
+
+  static onAuth(token: string) {
+    return JWT.verify(token);
+  }
 
   onCreate (options: any) {
     this.setState(new MyRoomState());

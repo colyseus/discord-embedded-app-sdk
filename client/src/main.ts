@@ -5,6 +5,9 @@ import TweenJS, { Easing, Tween } from "@tweenjs/tween.js";
 import { discordSDK } from './utils/DiscordSDK.js';
 import { colyseusSDK } from './utils/Colyseus.js';
 import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
+import { authenticate } from './utils/Auth.js';
+
+const RESOLUTION = 4;
 
 (async () => {
   /**
@@ -17,7 +20,7 @@ import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
     width: window.innerWidth,
     height: window.innerHeight,
     background: '#763b36',
-    resolution: 4,
+    resolution: RESOLUTION,
     roundPixels: true, // Pixel art
   });
 
@@ -94,7 +97,27 @@ import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
   let localPlayer: PIXI.Sprite; // we will use this to store the local player
   let playerSprites = new Map<Player, PIXI.Sprite>();
 
-  console.log("channelId", discordSDK.channelId)
+  try {
+    await authenticate();
+
+  } catch (e) {
+    console.error("Failed to authenticate", e);
+
+    const error = new PIXI.Text({
+      anchor: 0.5,
+      text: "Failed to authenticate.",
+      style: {
+        fontSize: 18,
+        fill: 0xff0000,
+        stroke: 0x000000,
+      }
+    });
+    error.position.x = app.screen.width / (RESOLUTION * 2);
+    error.position.y = app.screen.height / (RESOLUTION * 2);
+
+    app.stage.addChild(error);
+    return;
+  }
 
   /**
    * Join the game room
@@ -103,6 +126,7 @@ import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
     channelId: discordSDK.channelId // join by channel ID
   });
 
+  // incoming players
   room.state.players.onAdd((player, sessionId) => {
     const sprite = new PIXI.Sprite(PIXI.Assets.get("hero" + player.heroType));
     playerSprites.set(player, sprite);
@@ -133,6 +157,7 @@ import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
     app.stage.addChild(sprite);
   });
 
+  // leaving players
   room.state.players.onRemove((player, sessionId) => {
     const sprite = playerSprites.get(player)!;
 

@@ -30,7 +30,19 @@ export default config({
         //
         // Discord Embedded SDK: Retrieve user token when under Discord/Embed
         //
-        app.post('/api/discord_token', async (req, res) => {
+        app.post('/discord_token', async (req, res) => {
+          //
+          // TODO: remove this on production
+          //
+          if (req.body.code === "mock_code") {
+            const user = {
+              id: Math.random().toString(36).slice(2, 10),
+              username: `Guest ${Math.random().toString(36).slice(2, 10)}`,
+            }
+            res.send({ access_token: "mocked", token: await JWT.sign(user), user });
+            return;
+          }
+
           try {
             //
             // Retrieve access token from Discord API
@@ -52,6 +64,7 @@ export default config({
 
             //
             // Retrieve user data from Discord API
+            // https://discord.com/developers/docs/resources/user#user-object
             //
             const profile = await (await fetch(`https://discord.com/api/users/@me`, {
               method: "GET",

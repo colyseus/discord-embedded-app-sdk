@@ -1,62 +1,11 @@
 import { DiscordSDK, DiscordSDKMock } from '@discord/embedded-app-sdk';
 
-const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
+export const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
 
 const queryParams = new URLSearchParams(window.location.search);
 const isEmbedded = queryParams.get('frame_id') != null;
 
 let discordSDK: DiscordSDK | DiscordSDKMock;
-
-const getEmbeddedDiscordAuth = async () => {
-  await discordSDK.ready();
-
-  // Authorize with Discord Client
-  const { code } = await discordSDK.commands.authorize({
-    client_id: DISCORD_CLIENT_ID,
-    response_type: 'code',
-    state: '',
-    prompt: 'none',
-    // More info on scopes here: https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes
-    scope: [
-      // "applications.builds.upload",
-      // "applications.builds.read",
-      // "applications.store.update",
-      // "applications.entitlements",
-      // "bot",
-      'identify',
-      // "connections",
-      // "email",
-      // "gdm.join",
-      'guilds',
-      // "guilds.join",
-      'guilds.members.read',
-      // "messages.read",
-      // "relationships.read",
-      // 'rpc.activities.write',
-      // "rpc.notifications.read",
-      // "rpc.voice.write",
-      'rpc.voice.read',
-      // "webhook.incoming",
-    ],
-  });
-
-  // Retrieve an token and userdata from your embedded app's server
-  const response = await fetch('/api/discord_token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', },
-    body: JSON.stringify({ code, }),
-  });
-
-  const data = await response.json();
-
-  //
-  // Authenticate with the token, so we can use the Discord API
-  // This is required to listen to SPEAKING events
-  //
-  await discordSDK.commands.authenticate({ access_token: data.access_token, });
-
-  return data;
-};
 
 if (isEmbedded) {
   // Discord Client ID for the embedded app
@@ -111,4 +60,4 @@ if (isEmbedded) {
   });
 }
 
-export { discordSDK, isEmbedded, getEmbeddedDiscordAuth };
+export { discordSDK, isEmbedded };
