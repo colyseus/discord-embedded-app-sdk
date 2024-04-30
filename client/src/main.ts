@@ -141,9 +141,6 @@ const RESOLUTION = 4;
     const sprite = new PlayerObject(player);
     playerSprites.set(player, sprite);
 
-    // TODO: display player username
-    console.log(player.username);
-
     if (sessionId === room.sessionId) {
       // Set local/current player
       localPlayer = sprite;
@@ -160,8 +157,6 @@ const RESOLUTION = 4;
         sprite.position.y = player.position.y;
       });
     }
-
-    // sprite.anchor.set(0.5, 0.5);
 
     // Fade in effect
     sprite.scale.x = 0;
