@@ -40,9 +40,6 @@ cd client
 npx cloudflared tunnel --url http://localhost:5173
 ```
 
-> [!WARNING]
-> Each time you run `cloudflared`, it will generate a new URL. Be sure to update your Discord Activity's "OAuth2 → Redirect URL" and "URL Mappings → Target" to the new URL.
-
 ![cloudflared-screenshot](cloudflared-screenshot.png)
 
 You will need to update your Discord Activity's "OAuth2 → Redirect URL" and "URL Mappings → Target" to the URL provided by `cloudflared`:
@@ -52,6 +49,8 @@ You will need to update your Discord Activity's "OAuth2 → Redirect URL" and "U
   <img src="/settings-url-mappings.png" width="49%" />
 </p>
 
+> [!WARNING]
+> Each time you run `cloudflared`, it will generate a new URL. Be sure to update your Discord Activity's "OAuth2 → Redirect URL" and "URL Mappings → Target" to the new URL.
 
 _(Be sure to complete all the steps listed [here](https://discord.com/developers/docs/activities/building-an-activity) to ensure your development setup is working as expected.)_
 
