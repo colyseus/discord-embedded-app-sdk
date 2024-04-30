@@ -9,7 +9,8 @@ This repository contains the front-end and back-end are separated into two diffe
 - `client/` - Has the frontend project, using Pixi.js and Vite
 - `server/` - Has the backend project, using Colyseus (Node.js)
 
-The `client` development server (`vite`) proxies the `/api` requests to the `server` project. This allows you to run both projects simultaneously during development, and mimics the production setup where the `client` and `server` are deployed separately.
+The `client` development server (`vite`) proxies the `/api` requests to the `server` project. This mimics the production setup where the `client` and `server` are deployed separately, and the `client` communicates with the `server` via the `/api` prefix (mapped to your deployed `server` URL via Discord's "URL Mappings").
+
 
 ---
 
