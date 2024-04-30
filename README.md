@@ -20,9 +20,17 @@ The frontend and backend are separated into two different projects.
 
 In order to test your Discord Activity locally, you need to expose your local server to the public internet.
 
-As described [here](https://discord.com/developers/docs/activities/building-an-activity#step-4-running-your-app-locally-in-discord), we are using `cloudflared` to expose our local server to the public internet,
+We will need to open 3 terminal windows to run the server, client, and the `cloudflared` tunnel.
 
-To run your app locally, run the following commands:
+1. Start the server
+
+```
+cd server
+npm install
+npm start
+```
+
+2. Start the client
 
 ```
 cd client
@@ -30,9 +38,10 @@ npm install
 npm start
 ```
 
-From another terminal, run the following command:
+3. Expose your local server to the public internet _(as described [here](https://discord.com/developers/docs/activities/building-an-activity#step-4-running-your-app-locally-in-discord))._
 
 ```
+cd client
 npx cloudflared tunnel --url http://localhost:5173
 ```
 
