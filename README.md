@@ -9,6 +9,8 @@ This repository contains the front-end and back-end are separated into two diffe
 - `client/` - Has the frontend project, using Pixi.js and Vite
 - `server/` - Has the backend project, using Colyseus (Node.js)
 
+The `client` development server (`vite`) proxies the `/api` requests to the `server` project. This allows you to run both projects simultaneously during development, and mimics the production setup where the `client` and `server` are deployed separately.
+
 ---
 
 ## Testing your local Discord Activity
@@ -60,7 +62,7 @@ _(Be sure to complete all the steps listed [here](https://discord.com/developers
 
 ## Deploying your Discord Activity
 
-When deploying your Discord Activity, you will generally need to deploy both the `client` and `server` projects, under different URLs.
+When deploying your Discord Activity, you will generally need to deploy the `client` and `server` projects separately, under their own public URLs.
 
 > [!TIP]
 > You can use services like Vercel, Netlify, or Heroku to deploy your client project, and services like [Colyseus Cloud](https://colyseus.io/cloud-managed-hosting/), [Vultr](https://www.vultr.com/marketplace/apps/colyseus/?ref=8013231), AWS, or DigitalOcean to deploy your server project.
