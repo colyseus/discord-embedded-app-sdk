@@ -4,10 +4,10 @@ This Project Template is a starting point for crafting HTML5 multiplayer Discord
 
 ## Project Structure
 
-The frontend and backend are separated into two different projects.
+This repository contains the front-end and back-end are separated into two different projects.
 
-- `client/` - Contains the frontend, which uses Pixi.js
-- `server/` - Contains the backend, which uses Colyseus
+- `client/` - Has the frontend project, using Pixi.js and Vite
+- `server/` - Has the backend project, using Colyseus (Node.js)
 
 ---
 
@@ -35,6 +35,8 @@ npm start
 
 3. Expose your local server to the public internet _(as described [here](https://discord.com/developers/docs/activities/building-an-activity#step-4-running-your-app-locally-in-discord))._
 
+During development, there's no need to expose the `server` to the public internet - only the `client`. Our Vite development server proxies the `/api` requests to our local server.
+
 ```
 cd client
 npx cloudflared tunnel --url http://localhost:5173
@@ -58,8 +60,16 @@ _(Be sure to complete all the steps listed [here](https://discord.com/developers
 
 ## Deploying your Discord Activity
 
-...
+When deploying your Discord Activity, you will generally need to deploy both the `client` and `server` projects, under different URLs.
 
+> [!TIP]
+> You can use services like Vercel, Netlify, or Heroku to deploy your client project, and services like [Colyseus Cloud](https://colyseus.io/cloud-managed-hosting/), [Vultr](https://www.vultr.com/marketplace/apps/colyseus/?ref=8013231), AWS, or DigitalOcean to deploy your server project.
+
+You will need to configure your Discord Activity's URLs:
+
+- "OAuth2 → Redirect URL" to point to your deployed **client** project.
+- "URL Mappings → Root Mapping / Target" to point to your deployed **client** project.
+- "URL Mappings → Prefix `/api` / Target" to point to your deployed **server** project.
 
 ---
 
