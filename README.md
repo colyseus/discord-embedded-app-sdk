@@ -9,11 +9,6 @@ The frontend and backend are separated into two different projects.
 - `client/` - Contains the frontend, which uses Pixi.js
 - `server/` - Contains the backend, which uses Colyseus
 
-### Frontend Guide
-
-
-### Backend Guide
-
 ---
 
 ## Testing your local Discord Activity
@@ -45,8 +40,10 @@ cd client
 npx cloudflared tunnel --url http://localhost:5173
 ```
 
-![cloudflared-screenshot](cloudflared-screenshot.png)
+> [!WARNING]
+> Each time you run `cloudflared`, it will generate a new URL. Be sure to update your Discord Activity's "OAuth2 → Redirect URL" and "URL Mappings → Target" to the new URL.
 
+![cloudflared-screenshot](cloudflared-screenshot.png)
 
 You will need to update your Discord Activity's "OAuth2 → Redirect URL" and "URL Mappings → Target" to the URL provided by `cloudflared`:
 
