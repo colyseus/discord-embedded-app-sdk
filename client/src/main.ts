@@ -6,6 +6,8 @@ import { discordSDK } from './utils/DiscordSDK.js';
 import { colyseusSDK } from './utils/Colyseus.js';
 import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
 import { authenticate } from './utils/Auth.js';
+import { PlayerObject } from './objects/PlayerObject.js';
+// import { lerp } from './utils/MathUtils.js';
 
 const RESOLUTION = 4;
 
@@ -94,8 +96,8 @@ const RESOLUTION = 4;
   /**
    * Main game variables
    */
-  let localPlayer: PIXI.Sprite; // we will use this to store the local player
-  let playerSprites = new Map<Player, PIXI.Sprite>();
+  let localPlayer: PIXI.Container; // we will use this to store the local player
+  let playerSprites = new Map<Player, PIXI.Container>();
 
   try {
     /**
@@ -132,20 +134,34 @@ const RESOLUTION = 4;
     channelId: discordSDK.channelId // join by channel ID
   });
 
-  // incoming players
+  /**
+   * On player join
+   */
   room.state.players.onAdd((player, sessionId) => {
-    const sprite = new PIXI.Sprite(PIXI.Assets.get("hero" + player.heroType));
+    const sprite = new PlayerObject(player);
     playerSprites.set(player, sprite);
 
     // TODO: display player username
     console.log(player.username);
 
-    player.position.onChange(() => {
+    if (sessionId === room.sessionId) {
+      // Set local/current player
+      localPlayer = sprite;
+
+      // Set its initial position
+      // (Do not listen for changes, as we are the ones changing the local player!)
       sprite.position.x = player.position.x;
       sprite.position.y = player.position.y;
-    });
 
-    sprite.anchor.set(0.5, 0.5);
+    } else {
+      // Listen for changes of other players
+      player.position.onChange(() => {
+        sprite.position.x = player.position.x;
+        sprite.position.y = player.position.y;
+      });
+    }
+
+    // sprite.anchor.set(0.5, 0.5);
 
     // Fade in effect
     sprite.scale.x = 0;
@@ -160,13 +176,12 @@ const RESOLUTION = 4;
       .start();
     // End fade effect
 
-    if (sessionId === room.sessionId) {
-      localPlayer = sprite;
-    }
     app.stage.addChild(sprite);
   });
 
-  // leaving players
+  /**
+   * On player leave
+   */
   room.state.players.onRemove((player, sessionId) => {
     const sprite = playerSprites.get(player)!;
 
@@ -235,6 +250,15 @@ const RESOLUTION = 4;
       } else if (keys.right) {
         localPlayer.position.x += 1;
       }
+
+      // /**
+      //  * Interpolate other players
+      //  */
+      // playerSprites.forEach((sprite, player) => {
+      //   if (sprite === localPlayer) { return; }
+      //   sprite.position.x = lerp(sprite.position.x, player.position.x, 0.2);
+      //   sprite.position.y = lerp(sprite.position.y, player.position.y, 0.2);
+      // });
 
       // Client-authoritative positioning
       room.send("move", {

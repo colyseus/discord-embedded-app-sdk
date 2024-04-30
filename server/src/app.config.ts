@@ -9,7 +9,6 @@ import { auth, JWT } from "@colyseus/auth";
 import { MyRoom } from "./rooms/MyRoom";
 
 export default config({
-
     initializeGameServer: (gameServer) => {
         /**
          * Define your room handlers:

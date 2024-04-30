@@ -34,8 +34,6 @@ export async function authenticate() {
     ],
   });
 
-  console.log("code:", code);
-
   // Retrieve an token and userdata from your embedded app's server
   const { data } = await colyseusSDK.http.post('/discord_token', {
     headers: { 'Content-Type': 'application/json', },

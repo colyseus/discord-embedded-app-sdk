@@ -27,6 +27,8 @@ export class MyRoom extends Room<MyRoomState> {
   onCreate (options: any) {
     this.setState(new MyRoomState());
 
+    // this.setPatchRate(1000 / 60);
+
     this.onMessage("move", (client, message) => {
       const player = this.state.players.get(client.sessionId);
       player.position.x = message.x;

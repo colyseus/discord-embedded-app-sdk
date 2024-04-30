@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/colyseus/discord-embedded-app-sdk#readme",
   "devDependencies": {
+    "cloudflared": "^0.5.1",
     "typescript": "^5.2.2",
     "vite": "^5.2.10"
   },
