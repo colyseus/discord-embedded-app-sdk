@@ -42,8 +42,8 @@ npx cloudflared tunnel --url http://localhost:5173
 You will need to update your Discord Activity's "OAuth2 → Redirect URL" and "URL Mappings → Target" to the URL provided by `cloudflared`:
 
 <p float="left">
-  <img src="/settings-oauth.png" width="50%" />
-  <img src="/settings-url-mappings.png" width="50%" />
+  <img src="/settings-oauth.png" width="49%" />
+  <img src="/settings-url-mappings.png" width="49%" />
 </p>
 
 
