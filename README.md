@@ -2,6 +2,8 @@
 
 This Project Template is a starting point for crafting HTML5 multiplayer Discord Activities.
 
+![Video](video.gif)
+
 ## Project Structure
 
 This repository contains the front-end and back-end are separated into two different projects.
@@ -10,6 +12,13 @@ This repository contains the front-end and back-end are separated into two diffe
 - `server/` - Has the backend project, using Colyseus (Node.js)
 
 The `client` development server (`vite`) proxies the `/api` requests to the `server` project. This mimics the production setup where the `client` and `server` are deployed separately, and the `client` communicates with the `server` via the `/api` prefix (mapped to your deployed `server` URL via Discord's "URL Mappings").
+
+## Environment variables
+
+Both the `client` and `server` projects need environment variables configured from your Discord Activity.
+
+- `client/.env` - Should contain your "OAuth2 → Client ID" under `VITE_DISCORD_CLIENT_ID`.
+- `server/.env` - Should contain your "OAuth2 → Client ID" under `DISCORD_CLIENT_ID` and "OAuth2 → Client Secret" under `DISCORD_CLIENT_SECRET`.
 
 
 ---
@@ -50,8 +59,8 @@ npx cloudflared tunnel --url http://localhost:5173
 You will need to update your Discord Activity's "OAuth2 → Redirect URL" and "URL Mappings → Target" to the URL provided by `cloudflared`:
 
 <p float="left">
-  <img src="/settings-oauth.png" width="49%" />
-  <img src="/settings-url-mappings.png" width="49%" />
+  <img src="settings-oauth.png" width="49%" />
+  <img src="settings-url-mappings.png" width="49%" />
 </p>
 
 > [!WARNING]
