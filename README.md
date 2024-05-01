@@ -89,6 +89,7 @@ You will need to configure your Discord Activity's URLs:
 
 > Made a cool Discord Activity? Make a pull-request and contribute to the list below!
 
+- Air Party [tejaboy/airparty_discord](https://github.com/tejaboy/airparty_discord) ([YouTube Tutorial](https://www.youtube.com/watch?v=k6A2VUbIQio))
 - Discord Typing Race - [linkai101/keyboard-derby](https://github.com/linkai101/keyboard-derby/)
 - TypeScript + Colyseus + React - [Wave-Play/robo.js](https://github.com/Wave-Play/robo.js/tree/main/templates/activity-ts-colyseus-react)
 - [Creating Discord Games with Phaser](https://phaser.io/tutorials/creating-discord-games-with-phaser) - describes the steps required to create a Discord App and get a Phaser game running as a Discord Activity. (Does not use Colyseus, but can be adapted to do so.)
