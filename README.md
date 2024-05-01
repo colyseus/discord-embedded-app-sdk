@@ -85,7 +85,7 @@ You will need to configure your Discord Activity's URLs:
 
 ---
 
-## More Discord Activities (open source)
+## Explore More Discord Activities (Open source)
 
 > Made a cool Discord Activity? Make a pull-request and contribute to the list below!
 
