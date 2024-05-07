@@ -89,12 +89,14 @@ You will need to configure your Discord Activity's URLs:
 
 > Made a cool Discord Activity? Make a pull-request and contribute to the list below!
 
+- Phaser Discord Multiplayer Games Template - [phaserjs/discord-multiplayer-template](https://github.com/phaserjs/discord-multiplayer-template)
 - Air Party - [tejaboy/airparty_discord](https://github.com/tejaboy/airparty_discord) ([YouTube Tutorial](https://www.youtube.com/watch?v=k6A2VUbIQio))
 - Unity WebGL Multiplayer Tutorial - [DotSketched/Discord-Activity-WebGL-Tutorial](https://github.com/DotSketched/Discord-Activity-WebGL-Tutorial) ([YouTube Tutorial](https://www.youtube.com/watch?v=ff2AXPc_msc))
 - Chess-like tactical fps turn based combat game prototype - [RaiaN/tactochess](https://github.com/RaiaN/tactochess)
 - TypeScript + Colyseus + React - [Wave-Play/robo.js](https://github.com/Wave-Play/robo.js/tree/main/templates/activity-ts-colyseus-react)
 - Discord Typing Race - [linkai101/keyboard-derby](https://github.com/linkai101/keyboard-derby/)
-- [Creating Discord Games with Phaser](https://phaser.io/tutorials/creating-discord-games-with-phaser) - describes the steps required to create a Discord App and get a Phaser game running as a Discord Activity. (Does not use Colyseus, but can be adapted to do so.)
+
+Also, check out [Creating Discord Games with Phaser](https://phaser.io/tutorials/creating-discord-games-with-phaser) which describes the steps required to create a Discord App and get a Phaser game running as a Discord Activity. (For a full multiplayer Phaser + Colyseus check out [this repo](https://github.com/phaserjs/discord-multiplayer-template))
 
 ## License
 
