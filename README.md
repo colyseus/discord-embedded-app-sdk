@@ -20,6 +20,15 @@ Both the `client` and `server` projects need environment variables configured fr
 - `client/.env` - Should contain your "OAuth2 → Client ID" under `VITE_DISCORD_CLIENT_ID`.
 - `server/.env` - Should contain your "OAuth2 → Client ID" under `DISCORD_CLIENT_ID` and "OAuth2 → Client Secret" under `DISCORD_CLIENT_SECRET`.
 
+## URL Mappings & Content Security Policies
+
+The Colyseus SDK (`colyseus.js@0.15.25`) auto-detects when its running under
+Discord (`discordsays.com`) and forwards every request through `/colyseus` URL.
+You must configure the following URL Mapping to support using Colyseus Cloud and
+scalability:
+
+<img src="production-url-mappings.png" />
+
 
 ---
 
