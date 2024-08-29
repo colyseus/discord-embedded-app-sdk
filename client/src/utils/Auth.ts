@@ -12,6 +12,10 @@ export async function authenticate() {
     prompt: 'none',
     // More info on scopes here: https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes
     scope: [
+      // Activities will launch through app commands and interactions of user-installable apps.
+      // https://discord.com/developers/docs/tutorials/developing-a-user-installable-app#configuring-default-install-settings-adding-default-install-settings
+      'applications.commands',
+
       // "applications.builds.upload",
       // "applications.builds.read",
       // "applications.store.update",
@@ -39,6 +43,10 @@ export async function authenticate() {
     headers: { 'Content-Type': 'application/json', },
     body: JSON.stringify({ code, }),
   });
+
+  if (!data.access_token) {
+    throw new Error('Check if your "Discord Client ID" and "Secret" are correct in your server-side.');
+  }
 
   //
   // Authenticate with the token, so we can use the Discord API
