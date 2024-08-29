@@ -32,7 +32,7 @@ When testing from local environment, you must run `cloudflared` tunnel for both 
 When instantiating the `Client` SDK, both these should work:
 
 - `new Client('/.proxy/colyseus')`
-- `new Client('https://meet-hunt-kazakhstan-attraction.trycloudflare.com')`
+- `new Client('xxx-server.trycloudflare.com')`
 
 ### Using [Colyseus Cloud](https://colyseus.io/cloud-managed-hosting/)
 
