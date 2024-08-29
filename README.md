@@ -11,8 +11,6 @@ This repository contains the front-end and back-end are separated into two diffe
 - `client/` - Has the frontend project, using Pixi.js and Vite
 - `server/` - Has the backend project, using Colyseus (Node.js)
 
-The `client` development server (`vite`) proxies the `/api` requests to the `server` project. This mimics the production setup where the `client` and `server` are deployed separately, and the `client` communicates with the `server` via the `/api` prefix (mapped to your deployed `server` URL via Discord's "URL Mappings").
-
 ## Environment variables
 
 Both the `client` and `server` projects need environment variables configured from your Discord Activity.
@@ -22,12 +20,29 @@ Both the `client` and `server` projects need environment variables configured fr
 
 ## URL Mappings & Content Security Policies
 
-The Colyseus SDK (`colyseus.js@0.15.25`) auto-detects when its running under
-Discord (`discordsays.com`) and forwards every request through `/colyseus` URL.
-You must configure the following URL Mapping to support using Colyseus Cloud and
-scalability:
+Since version `colyseus.js@0.15.25+`, the SDK auto-detects when its running under Discord (`discordsays.com`) and forwards every request through `/.proxy/colyseus` URL.
+
+### Using `cloudflared`
+
+When testing from local environment, you must run `cloudflared` tunnel for both `client/` and `server/` projects:
+
+- `/` → client URL (`xxx-client.trycloudflare.com`).
+- `/colyseus` → server URL (`xxx-server.trycloudflare.com`).
+
+When instantiating the `Client` SDK, both these should work:
+
+- `new Client('/.proxy/colyseus')`
+- `new Client('https://meet-hunt-kazakhstan-attraction.trycloudflare.com')`
+
+### Using [Colyseus Cloud](https://colyseus.io/cloud-managed-hosting/)
+
+When using Colyseus Cloud with Scalability, you must configure the following URL Mappings:
 
 <img src="production-url-mappings.png" />
+
+When instantiating the `Client` SDK, you should do as follows:
+
+- `new Client('https://[subdomain].colyseus.cloud')`
 
 
 ---
@@ -90,7 +105,7 @@ You will need to configure your Discord Activity's URLs:
 
 - "OAuth2 → Redirect URL" to point to your deployed **client** project.
 - "URL Mappings → Root Mapping / Target" to point to your deployed **client** project.
-- "URL Mappings → Prefix `/api` / Target" to point to your deployed **server** project.
+- "URL Mappings → Prefix `/colyseus` / Target" to point to your deployed **server** project.
 
 ---
 
