@@ -7,6 +7,7 @@ import { colyseusSDK } from './utils/Colyseus.js';
 import type { MyRoomState, Player } from "../../server/src/rooms/MyRoom.js";
 import { authenticate } from './utils/Auth.js';
 import { PlayerObject } from './objects/PlayerObject.js';
+import { getStateCallbacks } from 'colyseus.js';
 // import { lerp } from './utils/MathUtils.js';
 
 const RESOLUTION = 4;
@@ -134,10 +135,12 @@ const RESOLUTION = 4;
     channelId: discordSDK.channelId // join by channel ID
   });
 
+  const $ = getStateCallbacks(room);
+
   /**
    * On player join
    */
-  room.state.players.onAdd((player, sessionId) => {
+  $(room.state).players.onAdd((player, sessionId) => {
     const sprite = new PlayerObject(player);
     playerSprites.set(player, sprite);
 
@@ -152,7 +155,7 @@ const RESOLUTION = 4;
 
     } else {
       // Listen for changes of other players
-      player.position.onChange(() => {
+      $(player).position.onChange(() => {
         sprite.position.x = player.position.x;
         sprite.position.y = player.position.y;
       });
@@ -177,7 +180,7 @@ const RESOLUTION = 4;
   /**
    * On player leave
    */
-  room.state.players.onRemove((player, sessionId) => {
+  $(room.state).players.onRemove((player, sessionId) => {
     const sprite = playerSprites.get(player)!;
 
     // Fade out & Remove sprite

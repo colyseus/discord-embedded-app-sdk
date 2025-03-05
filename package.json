@@ -1,0 +1,15 @@
+{
+  "name": "discord-embedded-app-sdk",
+  "version": "1.0.0",
+  "description": "This Project Template is a starting point for crafting HTML5 multiplayer Discord Activities.",
+  "main": "index.js",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "start:server": "npm start -w server",
+    "start:client": "npm start -w client"
+  },
+  "author": "",
+  "license": "ISC"
+}

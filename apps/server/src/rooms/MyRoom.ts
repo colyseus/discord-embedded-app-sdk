@@ -18,6 +18,7 @@ export class MyRoomState extends Schema {
 }
 
 export class MyRoom extends Room<MyRoomState> {
+  state = new MyRoomState();
   maxClients = 4;
 
   static onAuth(token: string) {
@@ -25,10 +26,6 @@ export class MyRoom extends Room<MyRoomState> {
   }
 
   onCreate (options: any) {
-    this.setState(new MyRoomState());
-
-    // this.setPatchRate(1000 / 60);
-
     this.onMessage("move", (client, message) => {
       const player = this.state.players.get(client.sessionId);
       player.position.x = message.x;

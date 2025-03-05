@@ -1,5 +1,5 @@
 {
-  "name": "@colyseus/discord-embedded-template-frontend",
+  "name": "client",
   "version": "1.0.0",
   "type": "module",
   "description": "Colyseus + Discord Embedded App SDK",
@@ -26,14 +26,14 @@
   "homepage": "https://github.com/colyseus/discord-embedded-app-sdk#readme",
   "devDependencies": {
     "cloudflared": "^0.5.1",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.10"
+    "typescript": "^5.8.2",
+    "vite": "^6.2.0"
   },
   "dependencies": {
-    "@discord/embedded-app-sdk": "^1.4.2",
+    "@discord/embedded-app-sdk": "^1.9.0",
     "@pixi/tilemap": "^5.0.1",
     "@tweenjs/tween.js": "^23.1.1",
-    "colyseus.js": "^0.15.26",
+    "colyseus.js": "^0.16.0",
     "pixi.js": "^8.1.0"
   }
 }

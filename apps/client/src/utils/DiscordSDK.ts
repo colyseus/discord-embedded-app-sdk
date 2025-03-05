@@ -39,7 +39,7 @@ if (isEmbedded) {
   const mockChannelId = 'dummyChannelId';
   // const mockChannelId = getOverrideOrRandomSessionValue('channel_id');
 
-  discordSDK = new DiscordSDKMock(DISCORD_CLIENT_ID, mockGuildId, mockChannelId);
+  discordSDK = new DiscordSDKMock(DISCORD_CLIENT_ID, mockGuildId, mockChannelId, 'en');
   const discriminator = String(mockUserId.charCodeAt(0) % 5);
 
   discordSDK._updateCommandMocks({

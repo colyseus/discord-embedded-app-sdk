@@ -6,10 +6,10 @@ This Project Template is a starting point for crafting HTML5 multiplayer Discord
 
 ## Project Structure
 
-This repository contains the front-end and back-end are separated into two different projects.
+This repository contains the front-end and back-end are separated into two different modules.
 
-- `client/` - Has the frontend project, using Pixi.js and Vite
-- `server/` - Has the backend project, using Colyseus (Node.js)
+- `apps/client/` - Has the frontend project, using Pixi.js and Vite
+- `apps/server/` - Has the backend project, using Colyseus (Node.js)
 
 ## Environment variables
 
@@ -17,10 +17,6 @@ Both the `client` and `server` projects need environment variables configured fr
 
 - `client/.env` - Should contain your "OAuth2 → Client ID" under `VITE_DISCORD_CLIENT_ID`.
 - `server/.env` - Should contain your "OAuth2 → Client ID" under `DISCORD_CLIENT_ID` and "OAuth2 → Client Secret" under `DISCORD_CLIENT_SECRET`.
-
-## URL Mappings & Content Security Policies
-
-Since version `colyseus.js@0.15.25+`, the SDK auto-detects when its running under Discord (`discordsays.com`) and forwards every request through `/.proxy/colyseus` URL.
 
 ### Using `cloudflared`
 
@@ -31,7 +27,7 @@ When testing from local environment, you must run `cloudflared` tunnel for both 
 
 When instantiating the `Client` SDK, both these should work:
 
-- `new Client('/.proxy/colyseus')`
+- `new Client('/colyseus')`
 - `new Client('xxx-server.trycloudflare.com')`
 
 ### Using [Colyseus Cloud](https://colyseus.io/cloud-managed-hosting/)
@@ -56,17 +52,13 @@ We will need to open 3 terminal windows to run the server, client, and the `clou
 1. Start the server
 
 ```
-cd server
-npm install
-npm start
+npm run start:server
 ```
 
 2. Start the client
 
 ```
-cd client
-npm install
-npm start
+npm run start:client
 ```
 
 3. Expose your local server to the public internet _(as described [here](https://discord.com/developers/docs/activities/building-an-activity#step-4-running-your-app-locally-in-discord))._
