@@ -8,8 +8,12 @@
   ],
   "scripts": {
     "start:server": "npm start -w server",
-    "start:client": "npm start -w client"
+    "start:client": "npm start -w client",
+    "cloudflared": "cloudflared tunnel --url http://localhost:5173"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cloudflared": "^0.7.0"
+  }
 }

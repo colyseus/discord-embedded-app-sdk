@@ -18,31 +18,6 @@ Both the `client` and `server` projects need environment variables configured fr
 - `client/.env` - Should contain your "OAuth2 → Client ID" under `VITE_DISCORD_CLIENT_ID`.
 - `server/.env` - Should contain your "OAuth2 → Client ID" under `DISCORD_CLIENT_ID` and "OAuth2 → Client Secret" under `DISCORD_CLIENT_SECRET`.
 
-### Using `cloudflared`
-
-When testing from local environment, you must run `cloudflared` tunnel for both `client/` and `server/` projects:
-
-- `/` → client URL (`xxx-client.trycloudflare.com`).
-- `/colyseus` → server URL (`xxx-server.trycloudflare.com`).
-
-When instantiating the `Client` SDK, both these should work:
-
-- `new Client('/colyseus')`
-- `new Client('xxx-server.trycloudflare.com')`
-
-### Using [Colyseus Cloud](https://colyseus.io/cloud-managed-hosting/)
-
-When using Colyseus Cloud with Scalability, you must configure the following URL Mappings:
-
-<img src="production-url-mappings.png" />
-
-When instantiating the `Client` SDK, you should do as follows:
-
-- `new Client('https://[subdomain].colyseus.cloud')`
-
-
----
-
 ## Testing your local Discord Activity
 
 In order to test your Discord Activity locally, you need to expose your local server to the public internet.
@@ -61,13 +36,12 @@ npm run start:server
 npm run start:client
 ```
 
-3. Expose your local server to the public internet _(as described [here](https://discord.com/developers/docs/activities/building-an-activity#step-4-running-your-app-locally-in-discord))._
+3. Use `cloudflared` or `ngrok` for exposing your local server to a public URL _([see complete tutorial here](https://discord.com/developers/docs/activities/building-an-activity#step-4-running-your-app-in-discord))._
 
-During development, there's no need to expose the `server` to the public internet - only the `client`. Our Vite development server proxies the `/api` requests to our local server.
+During development, there's no need to expose the `server` to the public internet - only the `client`. Our Vite development server proxies the `/colyseus` requests to our local server.
 
 ```
-cd client
-npx cloudflared tunnel --url http://localhost:5173
+npm run cloudflared
 ```
 
 ![cloudflared-screenshot](cloudflared-screenshot.png)
@@ -83,6 +57,18 @@ You will need to update your Discord Activity's "OAuth2 → Redirect URL" and "U
 > Each time you run `cloudflared`, it will generate a new URL. Be sure to update your Discord Activity's "OAuth2 → Redirect URL" and "URL Mappings → Target" to the new URL.
 
 _(Be sure to complete all the steps listed [here](https://discord.com/developers/docs/activities/building-an-activity) to ensure your development setup is working as expected.)_
+
+---
+
+### Using [Colyseus Cloud](https://colyseus.io/cloud-managed-hosting/)
+
+When using Colyseus Cloud with Scalability, you must configure the following URL Mappings:
+
+<img src="production-url-mappings.png" />
+
+When instantiating the `Client` SDK, you should do as follows:
+
+- `new Client('https://[subdomain].colyseus.cloud')`
 
 ---
 
