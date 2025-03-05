@@ -1,4 +1,4 @@
-# (Template) Colyseus + Discord Embedded App SDK
+# _Template:_ Colyseus + Discord Activity (Embedded App SDK)
 
 This Project Template is a starting point for crafting HTML5 multiplayer Discord Activities.
 
