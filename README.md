@@ -15,8 +15,8 @@ This repository contains the front-end and back-end are separated into two diffe
 
 Both the `client` and `server` projects need environment variables configured from your Discord Activity.
 
-- `client/.env` - Should contain your "OAuth2 → Client ID" under `VITE_DISCORD_CLIENT_ID`.
-- `server/.env` - Should contain your "OAuth2 → Client ID" under `DISCORD_CLIENT_ID` and "OAuth2 → Client Secret" under `DISCORD_CLIENT_SECRET`.
+- `apps/client/.env` - Should contain your "OAuth2 → Client ID" under `VITE_DISCORD_CLIENT_ID`.
+- `apps/server/.env` - Should contain your "OAuth2 → Client ID" under `DISCORD_CLIENT_ID` and "OAuth2 → Client Secret" under `DISCORD_CLIENT_SECRET`.
 
 ## Testing your local Discord Activity
 
